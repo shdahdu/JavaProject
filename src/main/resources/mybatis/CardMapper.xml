@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.CardMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="cardMap" type="com.example.model.Card">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="company" column="company"/>
+        <result property="position" column="position"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="address" column="address"/>
+        <result property="logo" column="logo"/>
+        <result property="type" column="type"/>
+        <result property="userId" column="userId"/>
+        <result property="addTime" column="addTime"/>
+    </resultMap>
+
+    <!-- 添加名片 -->
+    <insert id="addCard" parameterType="com.example.model.Card">
+        INSERT INTO cardtable(name, company, position, phone, email, address, logo, type, userId, addTime)
+        VALUES(#{name}, #{company}, #{position}, #{phone}, #{email}, #{address}, #{logo}, #{type}, #{userId}, #{addTime})
+    </insert>
+
+    <!-- 删除名片 -->
+    <delete id="deleteCard" parameterType="int">
+        DELETE FROM cardtable WHERE id = #{id}
+    </delete>
+
+    <!-- 修改名片 -->
+    <update id="updateCard" parameterType="com.example.model.Card">
+        UPDATE cardtable
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="company != null">company = #{company},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="type != null">type = #{type},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID查询名片 -->
+    <select id="findCardById" parameterType="int" resultMap="cardMap">
+        SELECT * FROM cardtable WHERE id = #{id}
+    </select>
+
+    <!-- 分页查询名片列表 -->
+    <select id="findCardsByPage" parameterType="com.example.model.Card" resultMap="cardMap">
+        SELECT * FROM cardtable
+        WHERE userId = #{userId}
+        ORDER BY addTime DESC
+        LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <!-- 查询名片总数 -->
+    <select id="countCards" parameterType="com.example.model.Card" resultType="int">
+        SELECT COUNT(*) FROM cardtable
+        WHERE userId = #{userId}
+    </select>
+
+    <!-- 搜索名片（带分页） -->
+    <select id="searchCards" resultMap="cardMap">
+        SELECT * FROM cardtable
+        WHERE userId = #{userId}
+        <if test="keyword != null and keyword != ''">
+            AND (name LIKE CONCAT('%', #{keyword}, '%')
+            OR company LIKE CONCAT('%', #{keyword}, '%')
+            OR phone LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY addTime DESC
+        LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <!-- 搜索名片总数 -->
+    <select id="countSearchCards" resultType="int">
+        SELECT COUNT(*) FROM cardtable
+        WHERE userId = #{userId}
+        <if test="keyword != null and keyword != ''">
+            AND (name LIKE CONCAT('%', #{keyword}, '%')
+            OR company LIKE CONCAT('%', #{keyword}, '%')
+            OR phone LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </select>
+
+</mapper>

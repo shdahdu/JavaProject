@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.UserMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="userMap" type="com.example.model.MyUser">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="addTime" column="addTime"/>
+    </resultMap>
+
+    <!-- 根据用户名查询用户 -->
+    <select id="selectByName" parameterType="string" resultMap="userMap">
+        SELECT * FROM usertable WHERE username = #{username}
+    </select>
+
+    <!-- 注册用户 -->
+    <insert id="register" parameterType="com.example.model.MyUser">
+        INSERT INTO usertable(username, password, addTime)
+        VALUES(#{username}, #{password}, #{addTime})
+    </insert>
+
+</mapper>
