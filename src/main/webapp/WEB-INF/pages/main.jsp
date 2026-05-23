@@ -161,7 +161,6 @@
                         <th>职位</th>
                         <th>电话</th>
                         <th>邮箱</th>
-                        <th>类型</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -169,7 +168,7 @@
                     <c:choose>
                         <c:when test="${empty cardList}">
                             <tr>
-                                <td colspan="8">
+                                <td colspan="7">
                                     <div class="empty-msg">暂无名片数据</div>
                                 </td>
                             </tr>
@@ -192,7 +191,6 @@
                                     <td>${card.position}</td>
                                     <td>${card.phone}</td>
                                     <td>${card.email}</td>
-                                    <td>${card.type}</td>
                                     <td>
                                         <div class="action-group">
                                             <a href="${pageContext.request.contextPath}/toUpdateCard?id=${card.id}" class="btn btn-warning btn-sm">修改</a>

@@ -6,21 +6,20 @@
 
     <!-- 结果映射 -->
     <resultMap id="userMap" type="com.example.model.MyUser">
-        <id property="id" column="id"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
-        <result property="addTime" column="addTime"/>
+        <id property="id" column="ID"/>
+        <result property="username" column="uname"/>
+        <result property="password" column="upwd"/>
     </resultMap>
 
     <!-- 根据用户名查询用户 -->
     <select id="selectByName" parameterType="string" resultMap="userMap">
-        SELECT * FROM usertable WHERE username = #{username}
+        SELECT ID, uname, upwd FROM usertable WHERE uname = #{username}
     </select>
 
     <!-- 注册用户 -->
     <insert id="register" parameterType="com.example.model.MyUser">
-        INSERT INTO usertable(username, password, addTime)
-        VALUES(#{username}, #{password}, #{addTime})
+        INSERT INTO usertable(uname, upwd)
+        VALUES(#{username}, #{password})
     </insert>
 
 </mapper>

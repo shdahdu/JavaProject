@@ -22,6 +22,15 @@
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+        <!-- 连接超时：5秒内无法获取连接则抛异常，而非无限等待 -->
+        <property name="maxWait" value="5000"/>
+        <!-- 连接池初始/最小/最大 -->
+        <property name="initialSize" value="2"/>
+        <property name="minIdle" value="2"/>
+        <property name="maxActive" value="10"/>
+        <!-- 连接有效性验证 -->
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="testOnBorrow" value="true"/>
     </bean>
 
     <!-- 配置SqlSessionFactory -->

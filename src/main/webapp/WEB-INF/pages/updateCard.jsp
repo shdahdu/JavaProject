@@ -148,20 +148,9 @@
                         <input type="email" name="email" value="${card.email}" placeholder="请输入邮箱"/>
                     </div>
                     <div class="form-group">
-                        <label>类型</label>
-                        <select name="type">
-                            <option value="">请选择</option>
-                            <option value="客户" ${card.type == '客户' ? 'selected' : ''}>客户</option>
-                            <option value="供应商" ${card.type == '供应商' ? 'selected' : ''}>供应商</option>
-                            <option value="朋友" ${card.type == '朋友' ? 'selected' : ''}>朋友</option>
-                            <option value="同事" ${card.type == '同事' ? 'selected' : ''}>同事</option>
-                            <option value="其他" ${card.type == '其他' ? 'selected' : ''}>其他</option>
-                        </select>
+                        <label>地址</label>
+                        <input type="text" name="address" value="${card.address}" placeholder="请输入地址"/>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>地址</label>
-                    <input type="text" name="address" value="${card.address}" placeholder="请输入地址"/>
                 </div>
                 <div class="form-group">
                     <label>Logo图片</label>

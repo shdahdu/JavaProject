@@ -130,20 +130,9 @@
                         <input type="email" name="email" placeholder="请输入邮箱"/>
                     </div>
                     <div class="form-group">
-                        <label>类型</label>
-                        <select name="type">
-                            <option value="">请选择</option>
-                            <option value="客户">客户</option>
-                            <option value="供应商">供应商</option>
-                            <option value="朋友">朋友</option>
-                            <option value="同事">同事</option>
-                            <option value="其他">其他</option>
-                        </select>
+                        <label>地址</label>
+                        <input type="text" name="address" placeholder="请输入地址"/>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>地址</label>
-                    <input type="text" name="address" placeholder="请输入地址"/>
                 </div>
                 <div class="form-group">
                     <label>Logo图片</label>

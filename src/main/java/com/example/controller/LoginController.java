@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+
+
 
 /**
  * 登录/注册控制器
@@ -62,8 +63,7 @@ public class LoginController {
             return "register";
         }
 
-        // 注册用户
-        user.setAddTime(new Date());
+        // 注册用户（usertable只有uname/upwd字段，不需要addTime）
         int result = userService.register(user);
         if (result > 0) {
             request.setAttribute("msg", "注册成功，请登录！");

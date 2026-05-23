@@ -4,29 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.CardMapper">
 
-    <!-- 结果映射 -->
+    <!-- 结果映射（适配cardtable实际列名） -->
     <resultMap id="cardMap" type="com.example.model.Card">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="company" column="company"/>
-        <result property="position" column="position"/>
-        <result property="phone" column="phone"/>
-        <result property="email" column="email"/>
+        <result property="position" column="post"/>
+        <result property="phone" column="telephone"/>
+        <result property="email" column="E_Mail"/>
         <result property="address" column="address"/>
-        <result property="logo" column="logo"/>
-        <result property="type" column="type"/>
-        <result property="userId" column="userId"/>
-        <result property="addTime" column="addTime"/>
+        <result property="logo" column="logoName"/>
+        <result property="userId" column="user_id"/>
     </resultMap>
 
     <!-- 添加名片 -->
     <insert id="addCard" parameterType="com.example.model.Card">
-        INSERT INTO cardtable(name, company, position, phone, email, address, logo, type, userId, addTime)
-        VALUES(#{name}, #{company}, #{position}, #{phone}, #{email}, #{address}, #{logo}, #{type}, #{userId}, #{addTime})
+        INSERT INTO cardtable(name, company, post, telephone, E_Mail, address, logoName, user_id)
+        VALUES(#{name}, #{company}, #{position}, #{phone}, #{email}, #{address}, #{logo}, #{userId})
     </insert>
 
     <!-- 删除名片 -->
-    <delete id="deleteCard" parameterType="int">
+    <delete id="deleteCard" parameterType="string">
         DELETE FROM cardtable WHERE id = #{id}
     </delete>
 
@@ -36,56 +34,55 @@
         <set>
             <if test="name != null">name = #{name},</if>
             <if test="company != null">company = #{company},</if>
-            <if test="position != null">position = #{position},</if>
-            <if test="phone != null">phone = #{phone},</if>
-            <if test="email != null">email = #{email},</if>
+            <if test="position != null">post = #{position},</if>
+            <if test="phone != null">telephone = #{phone},</if>
+            <if test="email != null">E_Mail = #{email},</if>
             <if test="address != null">address = #{address},</if>
-            <if test="logo != null">logo = #{logo},</if>
-            <if test="type != null">type = #{type},</if>
+            <if test="logo != null">logoName = #{logo},</if>
         </set>
         WHERE id = #{id}
     </update>
 
     <!-- 根据ID查询名片 -->
-    <select id="findCardById" parameterType="int" resultMap="cardMap">
+    <select id="findCardById" parameterType="string" resultMap="cardMap">
         SELECT * FROM cardtable WHERE id = #{id}
     </select>
 
     <!-- 分页查询名片列表 -->
     <select id="findCardsByPage" parameterType="com.example.model.Card" resultMap="cardMap">
         SELECT * FROM cardtable
-        WHERE userId = #{userId}
-        ORDER BY addTime DESC
+        WHERE user_id = #{userId}
+        ORDER BY id DESC
         LIMIT #{startIndex}, #{pageSize}
     </select>
 
     <!-- 查询名片总数 -->
     <select id="countCards" parameterType="com.example.model.Card" resultType="int">
         SELECT COUNT(*) FROM cardtable
-        WHERE userId = #{userId}
+        WHERE user_id = #{userId}
     </select>
 
     <!-- 搜索名片（带分页） -->
     <select id="searchCards" resultMap="cardMap">
         SELECT * FROM cardtable
-        WHERE userId = #{userId}
+        WHERE user_id = #{userId}
         <if test="keyword != null and keyword != ''">
             AND (name LIKE CONCAT('%', #{keyword}, '%')
             OR company LIKE CONCAT('%', #{keyword}, '%')
-            OR phone LIKE CONCAT('%', #{keyword}, '%'))
+            OR telephone LIKE CONCAT('%', #{keyword}, '%'))
         </if>
-        ORDER BY addTime DESC
+        ORDER BY id DESC
         LIMIT #{startIndex}, #{pageSize}
     </select>
 
     <!-- 搜索名片总数 -->
     <select id="countSearchCards" resultType="int">
         SELECT COUNT(*) FROM cardtable
-        WHERE userId = #{userId}
+        WHERE user_id = #{userId}
         <if test="keyword != null and keyword != ''">
             AND (name LIKE CONCAT('%', #{keyword}, '%')
             OR company LIKE CONCAT('%', #{keyword}, '%')
-            OR phone LIKE CONCAT('%', #{keyword}, '%'))
+            OR telephone LIKE CONCAT('%', #{keyword}, '%'))
         </if>
     </select>
 

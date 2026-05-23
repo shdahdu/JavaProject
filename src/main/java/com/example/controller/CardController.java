@@ -98,7 +98,6 @@ public class CardController {
             }
 
             card.setUserId(user.getId());
-            card.setAddTime(MyUtil.getNow());
             cardService.addCard(card);
 
             return "redirect:/cardList";
